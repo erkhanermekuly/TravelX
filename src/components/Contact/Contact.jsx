@@ -50,7 +50,7 @@ export default function Contact(){
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.6 }}
         >
-          Байланыс / Брон жасау
+          Байланыс 
         </motion.h5>
         <motion.p 
           className={styles.lead}

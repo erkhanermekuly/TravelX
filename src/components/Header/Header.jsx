@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./Header.module.css";
 
 export default function Header(){
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  
+  const isHomePage = location.pathname === '/';
 
   // localStorage-дан түнгі режимді оқу
   useEffect(() => {
@@ -26,14 +30,27 @@ export default function Header(){
       <div className="container">
         <div className={styles.row}>
           <div className={styles.brand}>
-            <img src="/images/logo.png" alt="logo" className={styles.logo}/>
-            <span>TravelX Mangystau</span>
+            <Link to="/">
+              <img src="/images/logo.png" alt="logo" className={styles.logo}/>
+              <span>TravelX Mangystau</span>
+            </Link>
           </div>
           <nav className={styles.nav}>
-            <a href="#about">Жоба туралы</a>
-            <a href="#destinations">Бағыттар</a>
-            <a href="#gallery">Галерея</a>
-            <a href="#contact" className={styles.cta}>Байланыс</a>
+            {isHomePage ? (
+              <>
+                <a href="#about">Жоба туралы</a>
+                <a href="#destinations">Бағыттар</a>
+                <a href="#gallery">Галерея</a>
+                <a href="#contact" className={styles.cta}>Байланыс</a>
+              </>
+            ) : (
+              <>
+                <Link to="/#about">Жоба туралы</Link>
+                <Link to="/#destinations">Бағыттар</Link>
+                <Link to="/#gallery">Галерея</Link>
+                <Link to="/#contact" className={styles.cta}>Байланыс</Link>
+              </>
+            )}
             
             <button 
               className={styles.themeToggle}
@@ -55,10 +72,21 @@ export default function Header(){
           </nav>
           
           <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.open : ''}`}>
-            <a href="#about" onClick={() => setIsMobileMenuOpen(false)}>Жоба туралы</a>
-            <a href="#destinations" onClick={() => setIsMobileMenuOpen(false)}>Бағыттар</a>
-            <a href="#gallery" onClick={() => setIsMobileMenuOpen(false)}>Галерея</a>
-            <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Байланыс</a>
+            {isHomePage ? (
+              <>
+                <a href="#about" onClick={() => setIsMobileMenuOpen(false)}>Жоба туралы</a>
+                <a href="#destinations" onClick={() => setIsMobileMenuOpen(false)}>Бағыттар</a>
+                <a href="#gallery" onClick={() => setIsMobileMenuOpen(false)}>Галерея</a>
+                <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Байланыс</a>
+              </>
+            ) : (
+              <>
+                <Link to="/#about" onClick={() => setIsMobileMenuOpen(false)}>Жоба туралы</Link>
+                <Link to="/#destinations" onClick={() => setIsMobileMenuOpen(false)}>Бағыттар</Link>
+                <Link to="/#gallery" onClick={() => setIsMobileMenuOpen(false)}>Галерея</Link>
+                <Link to="/#contact" onClick={() => setIsMobileMenuOpen(false)}>Байланыс</Link>
+              </>
+            )}
           </div>
         </div>
       </div>
