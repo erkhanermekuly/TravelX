@@ -23,7 +23,6 @@
 .about > * {
     position: relative;
     z-index: 1;
-    left: 15%;
 }
 
 h2 {
@@ -36,7 +35,6 @@ h2 {
     background-clip: text;
     letter-spacing: -0.02em;
     position: relative;
-    margin-left: -30%;
 }
 
 h2::after {
@@ -63,11 +61,44 @@ p {
 
 @media (max-width: 768px) {
     .about {
-        padding: 60px 0;
+        padding: 60px 20px;
+    }
+    
+    h2 {
+        font-size: clamp(24px, 7vw, 32px);
+        margin-bottom: 20px;
     }
     
     h2::after {
         width: 40px;
         height: 2px;
+        bottom: -6px;
+    }
+    
+    p {
+        font-size: clamp(14px, 4vw, 16px);
+        padding: 0 10px;
+        line-height: 1.7;
+    }
+}
+
+@media (max-width: 480px) {
+    .about {
+        padding: 50px 16px;
+    }
+    
+    h2 {
+        font-size: clamp(20px, 8vw, 28px);
+        margin-bottom: 16px;
+    }
+    
+    h2::after {
+        width: 30px;
+        height: 2px;
+    }
+    
+    p {
+        font-size: clamp(13px, 4.5vw, 15px);
+        padding: 0;
     }
 }

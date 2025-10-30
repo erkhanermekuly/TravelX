@@ -3,6 +3,7 @@ import styles from "./Header.module.css";
 
 export default function Header(){
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // localStorage-дан түнгі режимді оқу
   useEffect(() => {
@@ -33,6 +34,7 @@ export default function Header(){
             <a href="#destinations">Бағыттар</a>
             <a href="#gallery">Галерея</a>
             <a href="#contact" className={styles.cta}>Байланыс</a>
+            
             <button 
               className={styles.themeToggle}
               onClick={toggleDarkMode}
@@ -40,7 +42,24 @@ export default function Header(){
             >
               {isDarkMode ? "☀️" : "🌙"}
             </button>
+            
+            <button 
+              className={styles.menuToggle}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Мәзір"
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
           </nav>
+          
+          <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.open : ''}`}>
+            <a href="#about" onClick={() => setIsMobileMenuOpen(false)}>Жоба туралы</a>
+            <a href="#destinations" onClick={() => setIsMobileMenuOpen(false)}>Бағыттар</a>
+            <a href="#gallery" onClick={() => setIsMobileMenuOpen(false)}>Галерея</a>
+            <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Байланыс</a>
+          </div>
         </div>
       </div>
     </header>
