@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import styles from "./Footer.module.css";
 
 export default function Footer(){
+  const { t } = useTranslation();
   return (
     <motion.footer 
       className={styles.footer}
@@ -18,21 +20,21 @@ export default function Footer(){
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.6 }}
         >
-          <div>© {new Date().getFullYear()} Маңғыстауды зерттеу — Демо лендинг</div>
+          <div>© {new Date().getFullYear()} {t('header.brand', { defaultValue: 'TravelX Mangystau' })}</div>
           <div className={styles.links}>
             <motion.a 
               href="#" 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Privacy
+              {t('footer.privacy', { defaultValue: 'Privacy' })}
             </motion.a>
             <motion.a 
               href="#" 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Шарттар
+              {t('footer.terms', { defaultValue: 'Terms' })}
             </motion.a>
           </div>
         </motion.div>

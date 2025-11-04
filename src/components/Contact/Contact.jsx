@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import styles from "./Contact.module.css";
 
 export default function Contact(){
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const { t } = useTranslation();
   
   const sendToTelegram = async (data) => {
-    const telegramMessage = `🆕 Жаңа сұрау!\n\n👤 Аты: ${data.name}\n📱 Телефон: ${data.phone}\n💬 Хабарлама: ${data.message}`;
+    const telegramMessage = `🆕 ${t('contact.telegram.newRequest', { defaultValue: 'New request' })}!\n\n` +
+      `👤 ${t('contact.telegram.name', { defaultValue: 'Name' })}: ${data.name}\n` +
+      `📱 ${t('contact.telegram.phone', { defaultValue: 'Phone' })}: ${data.phone}\n` +
+      `💬 ${t('contact.telegram.message', { defaultValue: 'Message' })}: ${data.message}`;
     const telegramUrl = `https://t.me/ermekuly_014?text=${encodeURIComponent(telegramMessage)}`;
     window.open(telegramUrl, '_blank');
   };
@@ -17,7 +22,7 @@ export default function Contact(){
     e.preventDefault();
     
     if (!name.trim() || !phone.trim() || !message.trim()) {
-      alert("Барлық өрістерді толтырыңыз!");
+      alert(t('contact.alerts.fillFields', { defaultValue: 'Please fill in all fields!' }));
       return;
     }
     
@@ -28,7 +33,7 @@ export default function Contact(){
     };
     
     sendToTelegram(formData);
-    alert(`Рақмет, ${name}! Сіздің сұрауыңыз Telegram арқылы жіберілді.`);
+    alert(t('contact.alerts.sentThanks', { name, defaultValue: `Thanks, ${name}! Your request has been sent via Telegram.` }));
     setName(""); 
     setPhone(""); 
     setMessage("");
@@ -50,7 +55,7 @@ export default function Contact(){
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.6 }}
         >
-          Байланыс 
+          {t('contact.title', { defaultValue: 'Contact' })}
         </motion.h5>
         <motion.p 
           className={styles.lead}
@@ -59,7 +64,7 @@ export default function Contact(){
           viewport={{ once: true }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
-          Сұрақтарыңыз бар ма? Немесе жеке бағыт қажет пе? Хабарлама қалдырыңыз.
+          {t('contact.lead', { defaultValue: 'Have questions or need a custom route? Leave a message.' })}
         </motion.p>
         <motion.p 
           className={styles.notice}
@@ -68,7 +73,7 @@ export default function Contact(){
           viewport={{ once: true }}
           transition={{ delay: 0.35, duration: 0.6 }}
         >
-          * міндетті өрістер. Сіздің деректеріңіз Telegram арқылы тікелей жіберіледі.
+          {t('contact.notice', { defaultValue: '* required fields. Your data is sent directly via Telegram.' })}
         </motion.p>
         <motion.form 
           className={styles.form} 
@@ -82,7 +87,7 @@ export default function Contact(){
             type="text"
             value={name} 
             onChange={e=>setName(e.target.value)} 
-            placeholder="Сіздің атыңыз *" 
+            placeholder={t('contact.placeholders.name', { defaultValue: 'Your name *' })}
             required
             whileFocus={{ scale: 1.02, boxShadow: "0 0 0 3px rgba(5, 150, 105, 0.1)" }}
             transition={{ duration: 0.2 }}
@@ -91,7 +96,7 @@ export default function Contact(){
             type="tel"
             value={phone} 
             onChange={e=>setPhone(e.target.value)} 
-            placeholder="Телефон нөміріңіз * (+7 705 123 4567)" 
+            placeholder={t('contact.placeholders.phone', { defaultValue: 'Your phone * (+7 705 123 4567)' })}
             required
             whileFocus={{ scale: 1.02, boxShadow: "0 0 0 3px rgba(5, 150, 105, 0.1)" }}
             transition={{ duration: 0.2 }}
@@ -99,7 +104,7 @@ export default function Contact(){
           <motion.textarea 
             value={message} 
             onChange={e=>setMessage(e.target.value)} 
-            placeholder="Не жоспарлап жатқаныңызды айтыңыз * (мысалы: Маңғыстауға 3 күндік сапар)" 
+            placeholder={t('contact.placeholders.message', { defaultValue: "Tell us what you’re planning * (e.g., a 3-day trip to Mangystau)" })}
             rows="5" 
             required
             whileFocus={{ scale: 1.02, boxShadow: "0 0 0 3px rgba(5, 150, 105, 0.1)" }}
@@ -119,7 +124,7 @@ export default function Contact(){
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              📱 Telegram-ға жіберу
+              {t('contact.actions.submit', { defaultValue: '📱 Send to Telegram' })}
             </motion.button>
             <motion.a 
               href="https://t.me/ermekuly_014" 
@@ -130,7 +135,7 @@ export default function Contact(){
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              💬 Тікелей жазу
+              {t('contact.actions.write', { defaultValue: '💬 Message directly' })}
             </motion.a>
           </motion.div>
         </motion.form>

@@ -1,8 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import styles from "./Gallery.module.css";
 
 export default function Gallery() {
+    const { t } = useTranslation();
     const [selectedImage, setSelectedImage] = useState(null);
     
     const imgs = [
@@ -16,7 +18,7 @@ export default function Gallery() {
     return (
         <section id="gallery" className={styles.gallery}>
             <motion.h4 initial={{y:8,opacity:0}} whileInView={{y:0,opacity:1}} viewport={{once:true}}>
-                Галерея
+                {t('gallery.title', { defaultValue: 'Photo gallery' })}
             </motion.h4>
             <div className={styles.grid}>
                 {imgs.map((src, i) => (

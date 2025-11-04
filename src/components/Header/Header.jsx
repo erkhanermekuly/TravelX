@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import styles from "./Header.module.css";
 
 export default function Header(){
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { t, i18n } = useTranslation();
   
   const isHomePage = location.pathname === '/';
 
-  // localStorage-дан түнгі режимді оқу
   useEffect(() => {
     const savedTheme = localStorage.getItem('darkMode');
     if (savedTheme) {
@@ -32,25 +33,38 @@ export default function Header(){
           <div className={styles.brand}>
             <Link to="/">
               <img src="/images/logo.png" alt="logo" className={styles.logo}/>
-              <span>TravelX Mangystau</span>
+              <span>{t('header.brand', { defaultValue: 'TravelX Mangystau' })}</span>
             </Link>
           </div>
           <nav className={styles.nav}>
             {isHomePage ? (
               <>
-                <a href="#about">Жоба туралы</a>
-                <a href="#destinations">Бағыттар</a>
-                <a href="#gallery">Галерея</a>
-                <a href="#contact" className={styles.cta}>Байланыс</a>
+                <a href="#about">{t('header.nav.about', { defaultValue: 'About' })}</a>
+                <a href="#destinations">{t('header.nav.destinations', { defaultValue: 'Destinations' })}</a>
+                <a href="#gallery">{t('header.nav.gallery', { defaultValue: 'Gallery' })}</a>
+                <a href="#contact" className={styles.cta}>{t('header.nav.contact', { defaultValue: 'Contact' })}</a>
               </>
             ) : (
               <>
-                <Link to="/#about">Жоба туралы</Link>
-                <Link to="/#destinations">Бағыттар</Link>
-                <Link to="/#gallery">Галерея</Link>
-                <Link to="/#contact" className={styles.cta}>Байланыс</Link>
+                <Link to="/#about">{t('header.nav.about', { defaultValue: 'About' })}</Link>
+                <Link to="/#destinations">{t('header.nav.destinations', { defaultValue: 'Destinations' })}</Link>
+                <Link to="/#gallery">{t('header.nav.gallery', { defaultValue: 'Gallery' })}</Link>
+                <Link to="/#contact" className={styles.cta}>{t('header.nav.contact', { defaultValue: 'Contact' })}</Link>
               </>
             )}
+
+            <div className={styles.langSwitcher} role="group" aria-label="Language switcher">
+              {['kz','ru','en'].map(code => (
+                <button
+                  key={code}
+                  type="button"
+                  className={`${styles.langBtn} ${i18n.language?.startsWith(code) ? styles.active : ''}`}
+                  onClick={() => { i18n.changeLanguage(code); localStorage.setItem('app_lang', code); }}
+                >
+                  {code.toUpperCase()}
+                </button>
+              ))}
+            </div>
             
             <button 
               className={styles.themeToggle}
@@ -74,19 +88,32 @@ export default function Header(){
           <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.open : ''}`}>
             {isHomePage ? (
               <>
-                <a href="#about" onClick={() => setIsMobileMenuOpen(false)}>Жоба туралы</a>
-                <a href="#destinations" onClick={() => setIsMobileMenuOpen(false)}>Бағыттар</a>
-                <a href="#gallery" onClick={() => setIsMobileMenuOpen(false)}>Галерея</a>
-                <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Байланыс</a>
+                <a href="#about" onClick={() => setIsMobileMenuOpen(false)}>{t('header.nav.about')}</a>
+                <a href="#destinations" onClick={() => setIsMobileMenuOpen(false)}>{t('header.nav.destinations')}</a>
+                <a href="#gallery" onClick={() => setIsMobileMenuOpen(false)}>{t('header.nav.gallery')}</a>
+                <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>{t('header.nav.contact')}</a>
               </>
             ) : (
               <>
-                <Link to="/#about" onClick={() => setIsMobileMenuOpen(false)}>Жоба туралы</Link>
-                <Link to="/#destinations" onClick={() => setIsMobileMenuOpen(false)}>Бағыттар</Link>
-                <Link to="/#gallery" onClick={() => setIsMobileMenuOpen(false)}>Галерея</Link>
-                <Link to="/#contact" onClick={() => setIsMobileMenuOpen(false)}>Байланыс</Link>
+                <Link to="/#about" onClick={() => setIsMobileMenuOpen(false)}>{t('header.nav.about')}</Link>
+                <Link to="/#destinations" onClick={() => setIsMobileMenuOpen(false)}>{t('header.nav.destinations')}</Link>
+                <Link to="/#gallery" onClick={() => setIsMobileMenuOpen(false)}>{t('header.nav.gallery')}</Link>
+                <Link to="/#contact" onClick={() => setIsMobileMenuOpen(false)}>{t('header.nav.contact')}</Link>
               </>
             )}
+
+            <div className={styles.mobileLangSwitcher}>
+              {['kz','ru','en'].map(code => (
+                <button
+                  key={code}
+                  type="button"
+                  className={`${styles.langBtn} ${i18n.language?.startsWith(code) ? styles.active : ''}`}
+                  onClick={() => { i18n.changeLanguage(code); localStorage.setItem('app_lang', code); setIsMobileMenuOpen(false); }}
+                >
+                  {code.toUpperCase()}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>

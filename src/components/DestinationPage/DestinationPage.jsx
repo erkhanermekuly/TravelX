@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import styles from "./DestinationPage.module.css";
 
 const destinations = [
@@ -89,13 +90,34 @@ const destinations = [
 
 export default function DestinationPage() {
   const { id } = useParams();
+  const { t } = useTranslation();
   const destination = destinations.find(dest => dest.id === parseInt(id));
+  const lid = String(id);
+
+  const openDirections = (mode) => {
+    const dest = `${destination.coordinates.latitude},${destination.coordinates.longitude}`;
+    const base = `https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=${mode}`;
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const origin = `${pos.coords.latitude},${pos.coords.longitude}`;
+          window.open(`${base}&origin=${origin}`, '_blank');
+        },
+        () => {
+          window.open(base, '_blank');
+        },
+        { enableHighAccuracy: true, timeout: 5000 }
+      );
+    } else {
+      window.open(base, '_blank');
+    }
+  };
 
   if (!destination) {
     return (
       <div className={styles.notFound}>
-        <h1>Дестинация табылмады</h1>
-        <Link to="/" className={styles.backLink}>Басты бетке оралу</Link>
+  <h1>{t('destinationPage.notFoundTitle')}</h1>
+  <Link to="/" className={styles.backLink}>{t('destinationPage.backHome')}</Link>
       </div>
     );
   }
@@ -113,11 +135,9 @@ export default function DestinationPage() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8 }}
               >
-                <Link to="/" className={styles.backButton}>
-                  ← Артқа
-                </Link>
-                <h1>{destination.title}</h1>
-                <p>{destination.excerpt}</p>
+                <Link to="/" className={styles.backButton}>{t('destinationPage.back')}</Link>
+                <h1>{t(`destinationData.${lid}.title`, { defaultValue: destination.title })}</h1>
+                <p>{t(`destinationData.${lid}.excerpt`, { defaultValue: destination.excerpt })}</p>
                 <div className={styles.coordinates}>
                   📍 {destination.coordinates.latitude}°, {destination.coordinates.longitude}°
                 </div>
@@ -137,8 +157,8 @@ export default function DestinationPage() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h2>Сипаттама</h2>
-            <p>{destination.fullDescription}</p>
+            <h2>{t('destinationPage.descriptionTitle')}</h2>
+            <p>{t(`destinationData.${lid}.fullDescription`, { defaultValue: destination.fullDescription })}</p>
           </motion.section>
 
           {/* Детали */}
@@ -148,30 +168,30 @@ export default function DestinationPage() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <h2>Толық ақпарат</h2>
+            <h2>{t('destinationPage.detailsTitle')}</h2>
             <div className={styles.detailsGrid}>
               <div className={styles.detailItem}>
-                <strong>📍 Орналасуы:</strong>
-                <span>{destination.details.location}</span>
+                <strong>{t('destinationPage.detailLabels.location')}</strong>
+                <span>{t(`destinationData.${lid}.details.location`, { defaultValue: destination.details.location })}</span>
               </div>
               <div className={styles.detailItem}>
-                <strong>⏰ Ең жақсы уақыт:</strong>
-                <span>{destination.details.bestTime}</span>
+                <strong>{t('destinationPage.detailLabels.bestTime')}</strong>
+                <span>{t(`destinationData.${lid}.details.bestTime`, { defaultValue: destination.details.bestTime })}</span>
               </div>
               <div className={styles.detailItem}>
-                <strong>⏱️ Ұзақтығы:</strong>
-                <span>{destination.details.duration}</span>
+                <strong>{t('destinationPage.detailLabels.duration')}</strong>
+                <span>{t(`destinationData.${lid}.details.duration`, { defaultValue: destination.details.duration })}</span>
               </div>
               <div className={styles.detailItem}>
-                <strong>🚗 Қашықтық:</strong>
-                <span>{destination.details.distance}</span>
+                <strong>{t('destinationPage.detailLabels.distance')}</strong>
+                <span>{t(`destinationData.${lid}.details.distance`, { defaultValue: destination.details.distance })}</span>
               </div>
               <div className={styles.detailItem}>
-                <strong>⚡ Қиындық:</strong>
-                <span>{destination.details.difficulty}</span>
+                <strong>{t('destinationPage.detailLabels.difficulty')}</strong>
+                <span>{t(`destinationData.${lid}.details.difficulty`, { defaultValue: destination.details.difficulty })}</span>
               </div>
               <div className={styles.detailItem}>
-                <strong>🌐 Координаттар:</strong>
+                <strong>🌐 {t('destinationPage.coordsLabel')}:</strong>
                 <span>{destination.coordinates.latitude}°, {destination.coordinates.longitude}°</span>
               </div>
             </div>
@@ -184,9 +204,9 @@ export default function DestinationPage() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <h2>Ерекшеліктері</h2>
+            <h2>{t('destinationPage.highlightsTitle')}</h2>
             <div className={styles.highlightsGrid}>
-              {destination.details.highlights.map((highlight, index) => (
+              {(t(`destinationData.${lid}.details.highlights`, { returnObjects: true, defaultValue: destination.details.highlights }) || []).map((highlight, index) => (
                 <div key={index} className={styles.highlightItem}>
                   {highlight}
                 </div>
@@ -201,7 +221,7 @@ export default function DestinationPage() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.5 }}
           >
-            <h2>🎥 Видео</h2>
+            <h2>{t('destinationPage.videoTitle')}</h2>
             <div className={styles.videoWrapper}>
               <iframe 
                 src={`https://www.youtube.com/embed/${destination.videoId}`}
@@ -220,7 +240,7 @@ export default function DestinationPage() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            <h2>🗺️ Картада көру</h2>
+            <h2>{t('destinationPage.mapTitle')}</h2>
             <div className={styles.mapWrapper}>
               <iframe
                 src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50000!2d${destination.coordinates.longitude}!3d${destination.coordinates.latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDQxJzA0LjAiTiA1MsKwMjgnNDYuMCJF!5e1!3m2!1sen!2skz!4v1635123456789!5m2!1sen!2skz`}
@@ -242,6 +262,18 @@ export default function DestinationPage() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.7 }}
           >
+            <button
+              className={styles.mapBtn}
+              onClick={() => openDirections('driving')}
+            >
+              {t('destinationPage.actions.byCar', { defaultValue: '🚗 Go by car' })}
+            </button>
+            <button
+              className={styles.mapBtn}
+              onClick={() => openDirections('transit')}
+            >
+              {t('destinationPage.actions.byBus', { defaultValue: '🚌 Go by bus' })}
+            </button>
             <button 
               className={styles.mapBtn}
               onClick={() => {
@@ -249,19 +281,19 @@ export default function DestinationPage() {
                 window.open(url, '_blank');
               }}
             >
-              🗺️ Google Maps-та ашу
+              {t('destinationPage.actions.openInMaps')}
             </button>
             <button 
               className={styles.copyBtn}
               onClick={() => {
                 navigator.clipboard.writeText(`${destination.title}: ${destination.coordinates.latitude}, ${destination.coordinates.longitude}`);
-                alert('Координаттар көшірілді!');
+                alert(t('destinationPage.actions.copied'));
               }}
             >
-              📋 Координаттарды көшіру
+              {t('destinationPage.actions.copyCoords')}
             </button>
             <Link to="/" className={styles.backToListBtn}>
-              📋 Барлық дестинацияларды көру
+              {t('destinationPage.actions.backToList')}
             </Link>
           </motion.section>
 
