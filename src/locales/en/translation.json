@@ -1,6 +1,6 @@
 {
     "header": {
-        "brand": "TravelX Mangystau",
+        "brand": "MangyTour",
         "title": "Welcome to Mangystau",
         "subtitle": "Travel, nature and inspiration",
         "nav": {
@@ -8,6 +8,50 @@
             "destinations": "Destinations",
             "gallery": "Gallery",
             "contact": "Contact"
+        }
+    },
+
+    "aboutProject": {
+        "hero": {
+            "title": "MangyTour: AI guide to Mangystau",
+            "subtitle": "A digital platform that unites nature, culture and intelligent recommendations.",
+            "tagline": "Personalized • Navigation • Innovation"
+        },
+        "problem": {
+            "title": "The problem",
+            "paragraph1": "Mangystau is home to unique canyons, sacred rock formations and coastal landscapes, yet many of them are poorly visible on the tourist map.",
+            "paragraph2": "Information is fragmented, multilingual guides are scarce, navigation is complex. Without a digital ecosystem, the region’s economic and cultural potential remains underused."
+        },
+        "solution": {
+            "title": "The solution",
+            "intro": "MangyTour is an AI-powered mobile app and Telegram guide. It aggregates routes, provides accurate data, personalized suggestions and convenient navigation.",
+            "ai": {
+                "title": "AI capabilities",
+                "items": [
+                    "🤖 Personal route generator (nature, culture, extreme, spiritual)",
+                    "💬 Multilingual chat guide (Kazakh, Russian, English)",
+                    "🖼️ Photo recognition with explanations",
+                    "🌦️ Context-aware tips based on weather and conditions",
+                    "♻️ Eco-balance: distribution of visitor flows"
+                ]
+            },
+            "conclusion": "MangyTour delivers not just routes, but emotions and deep experiences."
+        },
+        "impact": {
+            "title": "Impact",
+            "items": [
+                "🌍 Heritage becomes globally visible",
+                "👥 New jobs for locals: guides, artisans, youth",
+                "📉 Lower unemployment and higher civic activity",
+                "💻 Digitized tourism aligned with global standards",
+                "🚀 Stronger regional brand, more investment and visitors"
+            ]
+        },
+        "cta": {
+            "title": "Let’s grow MangyTour together!",
+            "subtitle": "Get in touch about partnership, investment or volunteering.",
+            "primary": "Explore features",
+            "secondary": "Contact us"
         }
     },
 

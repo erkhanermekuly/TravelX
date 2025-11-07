@@ -33,20 +33,20 @@ export default function Header(){
           <div className={styles.brand}>
             <Link to="/">
               <img src="/images/logo.png" alt="logo" className={styles.logo}/>
-              <span>{t('header.brand', { defaultValue: 'TravelX Mangystau' })}</span>
+              <span>{t('header.brand', { defaultValue: 'MangyTour' })}</span>
             </Link>
           </div>
           <nav className={styles.nav}>
             {isHomePage ? (
               <>
-                <a href="#about">{t('header.nav.about', { defaultValue: 'About' })}</a>
+                <Link to="/about">{t('header.nav.about', { defaultValue: 'About' })}</Link>
                 <a href="#destinations">{t('header.nav.destinations', { defaultValue: 'Destinations' })}</a>
                 <a href="#gallery">{t('header.nav.gallery', { defaultValue: 'Gallery' })}</a>
                 <a href="#contact" className={styles.cta}>{t('header.nav.contact', { defaultValue: 'Contact' })}</a>
               </>
             ) : (
               <>
-                <Link to="/#about">{t('header.nav.about', { defaultValue: 'About' })}</Link>
+                <Link to="/about">{t('header.nav.about', { defaultValue: 'About' })}</Link>
                 <Link to="/#destinations">{t('header.nav.destinations', { defaultValue: 'Destinations' })}</Link>
                 <Link to="/#gallery">{t('header.nav.gallery', { defaultValue: 'Gallery' })}</Link>
                 <Link to="/#contact" className={styles.cta}>{t('header.nav.contact', { defaultValue: 'Contact' })}</Link>

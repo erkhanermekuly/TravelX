@@ -9,6 +9,7 @@ import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import ScrollToTopButton from './components/ScrollToTopButton/ScrollToTopButton';
 import DestinationPage from './components/DestinationPage/DestinationPage';
+import AboutProject from './pages/AboutProject/AboutProject';
 
 function HomePage() {
   return (
@@ -34,6 +35,7 @@ export default function App(){
         <main>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutProject />} />
             <Route path="/destination/:id" element={<DestinationPage />} />
           </Routes>
         </main>
